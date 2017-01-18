@@ -1,0 +1,3 @@
+<script type="text/javascript">
+add('business_add.html','商铺申请',350,600,'ba_commonApply.action');
+</script>

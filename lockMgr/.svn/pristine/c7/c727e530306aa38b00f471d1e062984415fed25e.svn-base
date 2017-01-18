@@ -1,0 +1,64 @@
+<script type="text/javascript">
+//add('business_add.html','商铺申请',350,600,'ba_commonApply.action');
+$("<div/>").dialog({
+	href : "business_add.html",
+	title : "商铺申请",
+	height : 350,
+	width : 600,
+	modal : true,
+	iconCls : "icon-add",
+	buttons : [ {
+		text : '确定添加',
+		iconCls : 'icon-add',
+		handler : function() {
+			var d = $(this).closest('.window-body');
+			//提交前判断
+			var province = $("#addressOne").val();  //省
+			var city = $("#addressTwo").val();  //市
+			var area = $("#addressThree").val();  //区
+			var street = $("#addressFour").val();  //街道
+			var address = province + city + area + street;
+			$.ajax({
+				type : "post",
+				dataType : "json",
+				url : "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=7HPvawjFFOX5sIjyvPAjHm80&callback=showLocation",
+				success : function(data) {
+					//document.getElementById("lat").value = data.showLocation&&showLocation.result.location.lat;
+					//document.getElementById("lng").value = data.showLocation&&showLocation.result.location.lng;
+					document.getElementById("lat").value = data.result.location.lat;
+					document.getElementById("lng").value = data.result.location.lng;
+				}
+			});
+			$("#form_add").form({
+				url : "ba_commonApply.action",
+				onSubmit : function(param) {
+					if($("#lat") == '' || $("#lng") == '') {
+						alert("获取坐标失败!");
+						alert($("#lat").val() + "," + $("#lng"));
+						return;
+					}
+					param.action = 'add';
+					return $(this).form('validate');
+				},
+				success : function(result) {
+					dealAjaxResult(result, function(r) {
+						d.dialog('destroy');
+						$.show_warning("提示", "操作成功");
+				    $("#"+datagridid).datagrid("reload");
+					});
+				}
+			});
+			$('#form_add').submit();
+		}
+	}, {
+		text : '取消添加',
+		iconCls : 'icon-cancel',
+		handler : function() {
+			$(this).closest('.window-body').dialog('destroy');
+		}
+	} ],
+	onClose : function() {
+		$(this).dialog('destroy');
+	}
+});
+</script>

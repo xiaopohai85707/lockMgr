@@ -1,0 +1,20 @@
+#MyEclipse Hibernate Properties
+#Wed Jan 14 15:49:24 CST 2015
+genBasicCompId=false
+sessionFactoryName=com.lockMgr.pojo.HibernateSessionFactory
+profile=
+daoSFId=
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=assigned
+genVersionTag=false
+sessionFactoryId=sessionFactory
+basePersistenceClass=com.lockMgr.pojo.BasePojo
+genAnnotations=false
+reSettingsFile=
+configFile=/ncTour/src/applicationContext.xml
+createConfigFile=false
